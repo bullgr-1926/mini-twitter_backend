@@ -3,6 +3,21 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+authRouter.get("/", async (req, res) => {
+  res.send(`
+  Welcome to our Mini Twitter API.
+  Instructions:
+  User registration: /register
+  User login: /login
+  Get all users: /users
+  Get all users by id: /users/id
+  Get all messages: /messages
+  Get all messages by id: /messages/id
+  Get all messages by user: users/id/messages
+  Create a new message: /messages
+  `);
+});
+
 authRouter.post("/register", async (req, res) => {
   const emailExist = await User.findOne({ email: req.body.email });
   if (emailExist) {

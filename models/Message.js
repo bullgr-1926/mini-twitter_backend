@@ -14,7 +14,7 @@ const Message = new Schema({
   },
   id_user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    required: true,
   },
 });
 

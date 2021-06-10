@@ -1,6 +1,6 @@
 const userRouter = require("express").Router();
 const User = require("../models/User");
-const User = require("../models/Message");
+const Message = require("../models/Message");
 const verifyToken = require("./verifyToken");
 
 userRouter.get("/", verifyToken, async (req, res) => {
@@ -20,13 +20,12 @@ userRouter.get("/:id", verifyToken, async (req, res) => {
 });
 
 userRouter.get("/:id/messages", verifyToken, async (req, res) => {
-  const getMessagesByUser = await User.findById(req.params.id)
-    .populate("id_user")
-    .exec();
-
-  if (!getMessagesByUser) {
+  const messagesByUser = await Message.find({ id_user: req.params.id });
+  if (!messagesByUser) {
     return res.status(400).send("Error getting user messages");
   }
 
-  res.json({ getMessagesByUser });
+  res.json({ messagesByUser });
 });
+
+module.exports = userRouter;

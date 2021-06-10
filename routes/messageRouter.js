@@ -21,7 +21,7 @@ messageRouter.get("/:id", verifyToken, async (req, res) => {
 messageRouter.post("/", verifyToken, async (req, res) => {
   const message = new Message({
     text: req.body.text,
-    id_user: req.verified._id,
+    id_user: req.verified.user._id,
   });
 
   let error = message.validateSync();
@@ -30,5 +30,7 @@ messageRouter.post("/", verifyToken, async (req, res) => {
   }
 
   await message.save();
-  res.status(200).send("Message created successful");
+  res.status(200).send("Message created successfully");
 });
+
+module.exports = messageRouter;

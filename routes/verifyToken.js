@@ -12,7 +12,7 @@ const verifyToken = (req, res, next) => {
     req.verified = verified;
     next();
   } catch (err) {
-    res.send("error");
+    res.send("Access denied");
   }
 };
 
