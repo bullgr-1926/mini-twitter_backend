@@ -21,7 +21,7 @@ messageRouter.get("/:id", verifyToken, async (req, res) => {
 messageRouter.post("/", verifyToken, async (req, res) => {
   const message = new Message({
     text: req.body.text,
-    id_user: req.verified.user._id,
+    id_user: req.body.id,
   });
 
   let error = message.validateSync();
