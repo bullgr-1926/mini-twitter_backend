@@ -2,7 +2,7 @@ const messageRouter = require("express").Router();
 const Message = require("../models/Message");
 const verifyToken = require("./verifyToken");
 
-messageRouter.get("/", verifyToken, async (req, res) => {
+messageRouter.get("/", async (req, res) => {
   const allMessages = await Message.find({});
   if (!allMessages) {
     return res.status(400).send("Error getting messages");
@@ -10,7 +10,7 @@ messageRouter.get("/", verifyToken, async (req, res) => {
   res.json({ allMessages });
 });
 
-messageRouter.get("/:id", verifyToken, async (req, res) => {
+messageRouter.get("/:id", async (req, res) => {
   const getMessage = await Message.findById(req.params.id);
   if (!getMessage) {
     return res.status(400).send("Error getting message");
@@ -21,7 +21,7 @@ messageRouter.get("/:id", verifyToken, async (req, res) => {
 messageRouter.post("/", verifyToken, async (req, res) => {
   const message = new Message({
     text: req.body.text,
-    id_user: req.body.id,
+    id_user: req.verified.user._id,
   });
 
   let error = message.validateSync();
